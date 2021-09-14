@@ -1,0 +1,163 @@
+<div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col col-md-6">
+          <h5 class="card-title">
+            {{ '::Menu:GClients' | abpLocalization }}
+          </h5>
+        </div>
+        <div class="text-right col col-md-6">
+          <div class="text-lg-right pt-2">
+            <button id="create" class="btn btn-primary" type="button" (click)="createGClient()">
+              <i class="fa fa-plus mr-1"></i>
+              <span>{{ "::NewGClient" | abpLocalization }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <ngx-datatable [rows]="gclient.items" [count]="gclient.totalCount" [list]="list" default>
+
+        <ngx-datatable-column
+          [name]="'::Actions' | abpLocalization"
+          [maxWidth]="150"
+          [sortable]="false"
+>
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <div ngbDropdown container="body" class="d-inline-block">
+              <button
+                class="btn btn-primary btn-sm dropdown-toggle"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                ngbDropdownToggle
+              >
+              <i class="fa fa-cog mr-1"></i>{{ '::Actions' | abpLocalization }}
+              </button>
+              <div ngbDropdownMenu>
+                <button ngbDropdownItem (click)="editGClient(row.id)">
+                  {{ '::Edit' | abpLocalization }}
+                </button>
+                <button ngbDropdownItem (click)="delete(row.id)">
+                  {{ '::Delete' | abpLocalization }}
+              </button>
+              </div>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <!--img [src]="pathImg"-->
+        <ngx-datatable-column [name]="'::PathImg' | abpLocalization" prop="pathImg">
+          <ng-template let-value="pathImg" ngx-datatable-cell-template> 
+            <img [src]='pathImg' > 
+          </ng-template> 
+        </ngx-datatable-column>
+        <!--ngx-datatable-column name="Image" prop="pathImg"> 
+          <ng-template let-value="pathImg" ngx-datatable-cell-template> 
+            <img [src]="pathImg" > 
+          </ng-template> 
+        </ngx-datatable-column--> 
+        <ngx-datatable-column [name]="'::NomComplet' | abpLocalization" prop="nomComplet"></ngx-datatable-column>
+        <ngx-datatable-column [name]="'::Cin' | abpLocalization" prop="cin">
+        </ngx-datatable-column>
+        <ngx-datatable-column [name]="'::Email' | abpLocalization" prop="email"></ngx-datatable-column>
+        <ngx-datatable-column [name]="'::DateNais' | abpLocalization" prop="dateNais">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row.dateNais | date }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [name]="'::Num' | abpLocalization" prop="num">
+        </ngx-datatable-column>
+        <ngx-datatable-column [name]="'::Adresse' | abpLocalization" prop="adresse"></ngx-datatable-column>
+        <!--ngx-datatable-column [name]="'::Image' | abpLocalization" prop="image"></ngx-datatable-column-->
+    </ngx-datatable>
+    </div>
+  </div>
+  
+  <abp-modal [(visible)]="isModalOpen">
+    <ng-template #abpHeader>
+      <h3>{{ (selectedGClient.id ? '::Edit' : '::NewGClient' ) | abpLocalization }}</h3>
+  </ng-template>
+  
+      <ng-template #abpBody>
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <div class="form-group">
+            <label for="gclient-nomComplet">Nom Complet</label><span> * </span>
+            <input type="text" id="gclient-nomComplet" class="form-control" formControlName="nomComplet" autofocus />
+          </div>
+      
+          <div class="form-group">
+            <label for="gclient-cin">Cin</label><span> * </span>
+            <input type="text" id="gclient-cin" class="form-control" formControlName="cin" autofocus />
+          </div>
+
+          <div class="form-group">
+            <label for="gclient-email">Email</label><span> * </span>
+            <input type="text" id="gclient-email" class="form-control" formControlName="email" autofocus />
+          </div>
+
+          <div class="form-group">
+            <label>Date naissance</label><span> * </span>
+            <input
+              #datepicker="ngbDatepicker"
+              class="form-control"
+              name="datepicker"
+              formControlName="dateNais"
+              ngbDatepicker
+              (click)="datepicker.toggle()"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="gclient-num">Num</label><span> * </span>
+            <input type="number" id="gclient-num" class="form-control" formControlName="num" />
+          </div>
+      
+          <div class="form-group">
+            <label for="gclient-adresse">Adresse</label><span> * </span>
+            <input type="text" id="gclient-adresse" class="form-control" formControlName="adresse" autofocus />
+          </div>
+
+          <div class="form-group">
+            <label for="gclient-pathImg">PathImg</label><span> * </span>
+            <input type="text" id="pathImg" class="form-control" formControlName="pathImg" autofocus />
+          </div>
+          
+        <!--div class="form-group">
+          <div>input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+            <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
+            <div class="form-group">
+              <span class="upload" *ngIf="progress > 0">
+                {{progress}}%
+              </span>
+              <span class="upload" *ngIf="message">
+                {{message}}
+              </span>
+            </div-->
+            <!--label for="gclient-image">Image</label><span> * </span>
+            <input type="file" (change)="onFileSelected($event)">
+            <input type="button" value="upload" (click)="onUpload()"/>
+
+          </div-->
+          
+          
+
+          <!--div class="form-group">
+            <label for="gclient-image">Image</label><span> * </span>
+            <input type="number" id="gclient-image" class="form-control" formControlName="image" autofocus/>
+          </div-->
+          
+        </form>
+      </ng-template>
+      
+  
+    <ng-template #abpFooter>
+      <button type="button" class="btn btn-secondary" abpClose>
+        {{ '::Close' | abpLocalization }}
+      </button>
+      <button class="btn btn-primary" (click)="save()" >
+        <i class="fa fa-check mr-1"></i>
+        {{ '::Save' | abpLocalization }}
+      </button>
+    </ng-template>
+  </abp-modal>
