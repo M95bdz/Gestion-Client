@@ -16,7 +16,7 @@ namespace Acme.AbpGestionClient.GClients
         public DateTime DateNais { get; set; }
         public int Num { get; set; }
         public string Adresse { get; set; }
-        //public byte[] Image { get; set; }
+        public string ImageName { get; set; }
         public string PathImg { get; set;}
        
     }
