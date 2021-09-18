@@ -29,5 +29,10 @@ namespace Acme.AbpGestionClient.GClients
 
         [Required]
         public string PathImg { get; set; }
+        [Required]
+        public IFormFile File { get; set; }
+
+        [Required]
+        public string ImageName { get; set; }
     }
 }
