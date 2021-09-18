@@ -15,5 +15,7 @@ namespace Acme.AbpGestionClient.GClients
         public int Num { get; set; }
         public string Adresse { get; set; }
         public string PathImg { get; set; }
+        public IFormFile File { get; set; }
+        public string ImageName { get; set; }
     }
 }
